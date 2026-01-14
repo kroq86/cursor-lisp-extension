@@ -16,7 +16,7 @@ cursor --install-extension cursor-lisp-interpreter-0.1.0.vsix
 1. Open Terminal
 2. Navigate to the extension directory:
    ```bash
-   cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+   cd /cursor-lisp-extension
    ```
 3. Run the install command above
 4. Reload the window (Cmd+R / Ctrl+R)
