@@ -4,13 +4,13 @@
 
 ### For Cursor:
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 cursor --install-extension cursor-lisp-interpreter-0.1.0.vsix
 ```
 
 ### For VS Code:
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 code --install-extension cursor-lisp-interpreter-0.1.0.vsix
 ```
 
@@ -22,7 +22,7 @@ code --install-extension cursor-lisp-interpreter-0.1.0.vsix
 
 ### Option 1: Automated Script
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 ./setup-keybindings.sh
 ```
 
@@ -62,13 +62,13 @@ cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-ext
 
 **Check config file exists:**
 ```bash
-ls -la /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/.cursor-lisp/config.lisp
+ls -la /.cursor-lisp/config.lisp
 ```
 ✅ Already created!
 
 **Check VSIX file:**
 ```bash
-ls -lh /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension/cursor-lisp-interpreter-0.1.0.vsix
+ls -lh /cursor-lisp-interpreter-0.1.0.vsix
 ```
 ✅ File exists (17 KB)
 
