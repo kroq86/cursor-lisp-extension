@@ -1,0 +1,133 @@
+{
+  "name": "cursor-lisp-interpreter",
+  "displayName": "Cursor Lisp Interpreter",
+  "description": "Full Lisp interpreter for Cursor/VS Code with Emacs-like keybindings and custom script support",
+  "version": "0.1.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Keymaps",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cursor-lisp.evaluate",
+        "title": "Evaluate Lisp Expression"
+      },
+      {
+        "command": "cursor-lisp.evaluateSelection",
+        "title": "Evaluate Selected Lisp Code"
+      },
+      {
+        "command": "cursor-lisp.repl",
+        "title": "Open Lisp REPL"
+      },
+      {
+        "command": "cursor-lisp.loadConfig",
+        "title": "Reload Lisp Configuration"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "cursor-lisp.evaluateSelection",
+        "key": "ctrl+alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "cursor-lisp.spacePrefix",
+        "key": "space",
+        "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "d",
+        "args": "D",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "r",
+        "args": "R",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "p",
+        "args": "P",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "f",
+        "args": "F",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "t",
+        "args": "T",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "w",
+        "args": "W",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "s",
+        "args": "S",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "v",
+        "args": "v",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      },
+      {
+        "command": "cursor-lisp.handleKey",
+        "key": "shift+v",
+        "args": "V",
+        "when": "cursor-lisp.spacePrefixActive == true"
+      }
+    ],
+    "configuration": {
+      "title": "Cursor Lisp Interpreter",
+      "properties": {
+        "cursorLisp.configPath": {
+          "type": "string",
+          "default": "${workspaceFolder}/.cursor-lisp/config.lisp",
+          "description": "Path to Lisp configuration file"
+        },
+        "cursorLisp.enableSpacePrefix": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Space (SPC) prefix keybindings"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^18.0.0",
+    "@types/mocha": "^10.0.0",
+    "typescript": "^5.0.0"
+  }
+}
+

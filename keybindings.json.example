@@ -1,0 +1,50 @@
+[
+  {
+    "key": "space space",
+    "command": "cursor-lisp.spacePrefix",
+    "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible"
+  },
+  {
+    "key": "d",
+    "command": "cursor-lisp.handleKey",
+    "args": "D",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "r",
+    "command": "cursor-lisp.handleKey",
+    "args": "R",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "p",
+    "command": "cursor-lisp.handleKey",
+    "args": "P",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "f",
+    "command": "cursor-lisp.handleKey",
+    "args": "F",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "t",
+    "command": "cursor-lisp.handleKey",
+    "args": "T",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "w",
+    "command": "cursor-lisp.handleKey",
+    "args": "W",
+    "when": "cursor-lisp.spacePrefixActive"
+  },
+  {
+    "key": "s",
+    "command": "cursor-lisp.handleKey",
+    "args": "S",
+    "when": "cursor-lisp.spacePrefixActive"
+  }
+]
+
