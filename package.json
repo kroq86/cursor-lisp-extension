@@ -1,9 +1,13 @@
 {
   "name": "cursor-lisp-interpreter",
   "displayName": "Cursor Lisp Interpreter",
-  "description": "Full Lisp interpreter for Cursor/VS Code with Emacs-like keybindings and custom script support",
+  "description": "Full Lisp interpreter for Cursor/VS Code with Vim-like leader key bindings and custom Lisp script support",
   "version": "0.1.0",
-  "publisher": "your-publisher-name",
+  "publisher": "KirillOstapenko",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kroq86/cursor-lisp-extension.git"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -42,8 +46,8 @@
       },
       {
         "command": "cursor-lisp.spacePrefix",
-        "key": "space",
-        "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible"
+        "key": ",",
+        "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible && vim.mode != 'Insert'"
       },
       {
         "command": "cursor-lisp.handleKey",
@@ -111,7 +115,7 @@
         "cursorLisp.enableSpacePrefix": {
           "type": "boolean",
           "default": true,
-          "description": "Enable Space (SPC) prefix keybindings"
+          "description": "Enable Leader key (,) prefix keybindings"
         }
       }
     }

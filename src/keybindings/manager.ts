@@ -5,7 +5,7 @@ import { LispInterpreter } from '../lisp/interpreter';
 import { VSCodeAPI } from '../api/vscode-api';
 
 /**
- * Manages Space (SPC) prefix keybindings and custom Lisp scripts
+ * Manages Leader key (,) prefix keybindings and custom Lisp scripts
  */
 export class KeybindingManager {
     private interpreter: LispInterpreter;
@@ -32,10 +32,10 @@ export class KeybindingManager {
     }
 
     /**
-     * Setup Space prefix keybinding detection
+     * Setup Leader key prefix keybinding detection
      */
     private setupSpacePrefix() {
-        // Register a keybinding handler for Space
+        // Register a keybinding handler for Leader key (,)
         const spacePrefixCommand = vscode.commands.registerCommand(
             'cursor-lisp.spacePrefix',
             () => {
@@ -43,7 +43,7 @@ export class KeybindingManager {
             }
         );
 
-        // Register handler for individual keys during Space prefix mode
+        // Register handler for individual keys during Leader prefix mode
         const handleKeyCommand = vscode.commands.registerCommand(
             'cursor-lisp.handleKey',
             async (key: string) => {
@@ -55,44 +55,34 @@ export class KeybindingManager {
     }
 
     /**
-     * Handle Space prefix keypress (double-press detection)
+     * Handle Leader key press - activate prefix mode
      */
     private handleSpacePrefix() {
-        const now = Date.now();
-        const timeSinceLastPress = now - this.lastSpacePress;
+        // Activate prefix mode immediately on leader key press
+        this.spacePrefixActive = true;
+        this.currentSequence = [];
 
-        if (timeSinceLastPress < this.SPACE_DOUBLE_PRESS_TIMEOUT && this.lastSpacePress > 0) {
-            // Double press detected - activate prefix mode
-            this.spacePrefixActive = true;
-            this.currentSequence = [];
+        // Set context variable for keybindings
+        vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', true);
 
-            // Set context variable for keybindings
-            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', true);
+        // Show status bar indicator
+        vscode.window.setStatusBarMessage(',', 2000);
 
-            // Show status bar indicator
-            vscode.window.setStatusBarMessage('SPC', 2000);
-
-            // Reset timeout
-            if (this.spacePrefixTimeout) {
-                clearTimeout(this.spacePrefixTimeout);
-            }
-
-            // Timeout after 2 seconds
-            this.spacePrefixTimeout = setTimeout(() => {
-                this.spacePrefixActive = false;
-                this.currentSequence = [];
-                vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
-            }, 2000);
-
-            this.lastSpacePress = 0; // Reset
-        } else {
-            // Single press - just record the time
-            this.lastSpacePress = now;
+        // Reset timeout
+        if (this.spacePrefixTimeout) {
+            clearTimeout(this.spacePrefixTimeout);
         }
+
+        // Timeout after 2 seconds
+        this.spacePrefixTimeout = setTimeout(() => {
+            this.spacePrefixActive = false;
+            this.currentSequence = [];
+            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
+        }, 2000);
     }
 
     /**
-     * Handle keypress during Space prefix mode
+     * Handle keypress during Leader prefix mode
      */
     async handleKey(key: string): Promise<boolean> {
         if (!this.spacePrefixActive) {
@@ -127,7 +117,7 @@ export class KeybindingManager {
 
         if (!hasPartialMatch) {
             // No match, reset
-            vscode.window.showWarningMessage(`No keybinding found for SPC ${sequence}`);
+            vscode.window.showWarningMessage(`No keybinding found for , ${sequence}`);
             this.spacePrefixActive = false;
             this.currentSequence = [];
             vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
@@ -138,7 +128,7 @@ export class KeybindingManager {
         }
 
         // Show current sequence in status bar
-        vscode.window.setStatusBarMessage(`SPC ${sequence}...`, 2000);
+        vscode.window.setStatusBarMessage(`, ${sequence}...`, 2000);
         
         // Set new timeout
         this.spacePrefixTimeout = setTimeout(() => {
@@ -299,12 +289,13 @@ export class KeybindingManager {
 
         const defaultConfig = `;; Cursor Lisp Configuration
 ;; Define custom keybindings and functions here
+;; Leader key: , (comma) - press , then key sequence
 
-;; Example: SPC D R restarts Docker
+;; Example: ,dr restarts Docker
 (define-key "D R" 
   "(execute-command \"docker-compose.restart\")")
 
-;; Example: SPC P P opens Python terminal with selected code
+;; Example: ,pp opens Python terminal with selected code
 (define-key "P P"
   "(let ((code (get-selection)))
      (run-terminal-command (concat \"python3 -c '\" code \"'\")))")

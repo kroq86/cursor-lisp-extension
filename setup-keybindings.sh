@@ -94,8 +94,8 @@ EOF
     echo ""
     echo "Next steps:"
     echo "1. Reload Cursor/VS Code window (Cmd+R / Ctrl+R)"
-    echo "2. Test by pressing Space in an editor"
-    echo "3. Try SPC D R to restart Docker (if configured)"
+    echo "2. Test by pressing , (comma) in an editor"
+    echo "3. Try ,dr to restart Docker (if configured)"
 else
     echo "Setup cancelled."
     echo ""
