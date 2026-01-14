@@ -57,13 +57,13 @@ export class KeybindingManager {
     /**
      * Handle Leader key press - activate prefix mode
      */
-    private handleSpacePrefix() {
+    private async handleSpacePrefix() {
         // Activate prefix mode immediately on leader key press
         this.spacePrefixActive = true;
         this.currentSequence = [];
 
         // Set context variable for keybindings
-        vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', true);
+        await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', true);
 
         // Show status bar indicator
         vscode.window.setStatusBarMessage(',', 2000);
@@ -71,13 +71,14 @@ export class KeybindingManager {
         // Reset timeout
         if (this.spacePrefixTimeout) {
             clearTimeout(this.spacePrefixTimeout);
+            this.spacePrefixTimeout = null;
         }
 
         // Timeout after 2 seconds
-        this.spacePrefixTimeout = setTimeout(() => {
+        this.spacePrefixTimeout = setTimeout(async () => {
             this.spacePrefixActive = false;
             this.currentSequence = [];
-            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
+            await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
         }, 2000);
     }
 
@@ -100,12 +101,18 @@ export class KeybindingManager {
         // Check if we have a matching keybinding
         if (this.keybindings.has(sequence)) {
             const lispCode = this.keybindings.get(sequence)!;
-            await this.executeLispCode(lispCode);
-            this.spacePrefixActive = false;
-            this.currentSequence = [];
-            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
-            if (this.spacePrefixTimeout) {
-                clearTimeout(this.spacePrefixTimeout);
+            try {
+                await this.executeLispCode(lispCode);
+            } finally {
+                // Always reset state, even if there was an error
+                this.spacePrefixActive = false;
+                this.currentSequence = [];
+                if (this.spacePrefixTimeout) {
+                    clearTimeout(this.spacePrefixTimeout);
+                    this.spacePrefixTimeout = null;
+                }
+                // Force reset context variable
+                await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
             }
             return true;
         }
@@ -120,10 +127,11 @@ export class KeybindingManager {
             vscode.window.showWarningMessage(`No keybinding found for , ${sequence}`);
             this.spacePrefixActive = false;
             this.currentSequence = [];
-            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
             if (this.spacePrefixTimeout) {
                 clearTimeout(this.spacePrefixTimeout);
+                this.spacePrefixTimeout = null;
             }
+            await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
             return false;
         }
 
@@ -131,10 +139,10 @@ export class KeybindingManager {
         vscode.window.setStatusBarMessage(`, ${sequence}...`, 2000);
         
         // Set new timeout
-        this.spacePrefixTimeout = setTimeout(() => {
+        this.spacePrefixTimeout = setTimeout(async () => {
             this.spacePrefixActive = false;
             this.currentSequence = [];
-            vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
+            await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
         }, 2000);
         
         return true;
@@ -321,11 +329,14 @@ export class KeybindingManager {
         );
     }
 
-    dispose() {
+    async dispose() {
         if (this.spacePrefixTimeout) {
             clearTimeout(this.spacePrefixTimeout);
+            this.spacePrefixTimeout = null;
         }
-        vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
+        this.spacePrefixActive = false;
+        this.currentSequence = [];
+        await vscode.commands.executeCommand('setContext', 'cursor-lisp.spacePrefixActive', false);
     }
 }
 
