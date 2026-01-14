@@ -1,8 +1,8 @@
 [
   {
-    "key": "space space",
+    "key": ",",
     "command": "cursor-lisp.spacePrefix",
-    "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible"
+    "when": "editorTextFocus && !suggestWidgetVisible && !parameterHintsVisible && vim.mode != 'Insert'"
   },
   {
     "key": "d",
