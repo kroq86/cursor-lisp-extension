@@ -6,13 +6,13 @@
 
 **For Cursor:**
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 cursor --install-extension cursor-lisp-interpreter-0.1.0.vsix
 ```
 
 **For VS Code:**
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 code --install-extension cursor-lisp-interpreter-0.1.0.vsix
 ```
 
@@ -24,7 +24,7 @@ code --install-extension cursor-lisp-interpreter-0.1.0.vsix
 
 1. Open the extension folder in Cursor/VS Code:
    ```bash
-   cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+   cd /cursor-lisp-extension
    cursor .  # or code .
    ```
 
@@ -39,7 +39,7 @@ code --install-extension cursor-lisp-interpreter-0.1.0.vsix
 ### Option A: Automated Setup Script
 
 ```bash
-cd /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension
+cd /cursor-lisp-extension
 ./setup-keybindings.sh
 ```
 
@@ -124,14 +124,14 @@ The extension looks for `.cursor-lisp/config.lisp` in your workspace root.
 
 **Check if it exists:**
 ```bash
-ls -la /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/.cursor-lisp/config.lisp
+ls -la //.cursor-lisp/config.lisp
 ```
 
 **If it doesn't exist, create it:**
 ```bash
-mkdir -p /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/.cursor-lisp
-cp /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/cursor-lisp-extension/.cursor-lisp/config.lisp \
-   /Users/kirill_ostapenko/UC/CLONE/energyai-agentic-uc4-startup/.cursor-lisp/config.lisp
+mkdir -p /.cursor-lisp
+cp /cursor-lisp-extension/.cursor-lisp/config.lisp \
+   /.cursor-lisp/config.lisp
 ```
 
 Or copy the example from the extension directory.
